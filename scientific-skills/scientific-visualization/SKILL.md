@@ -617,14 +617,42 @@ g = sns.jointplot(data=df, x='gene1', y='gene2',
                   hue='treatment', kind='scatter',
                   height=6, ratio=4, marginal_kws={'kde': True})
 ```
-
-#### Common Seaborn Issues and Solutions
-
-**Issue: Legend outside plot area**
-```python
-g = sns.relplot(...)
-g._legend.set_bbox_to_anchor((0.9, 0.5))
-```
+620: 
+621: #### Common Seaborn Issues and Solutions
+622: 
+623: **Issue: Legend outside plot area**
+624: ```python
+625: g = sns.relplot(...)
+626: g._legend.set_bbox_to_anchor((0.9, 0.5))
+627: ```
+628: 
+629: ### 7. Specialized Patterns (CSS & Social Science)
+630: 
+631: Computational Social Science requires specific visualization paradigms distinct from biomedical labs.
+632: 
+633: #### A. Coefficient Plots (The "Regression Killer")
+634: Instead of massive tables, visualize model estimates using `Forest Plot` aesthetics.
+635: *   **Metric**: Plot Coefficient $\beta$ on X-axis vs. Variable Names on Y-axis.
+636: *   **Uncertainty**: Horizontal measures for 95% CIs. Vertical rule at $x=0$.
+637: *   **Color**: Blue for Positive Sig, Red for Negative Sig, Grey for Non-Sig.
+638: *   **Tip**: Sort variables by coefficient magnitude, not alphabetically.
+639: 
+640: #### B. Semantic Projections (Embeddings)
+641: Visualizing t-SNE / UMAP of thousands of text documents.
+642: *   **Density over Points**: Use very small point size (`s=0.5`) and high transparency (`alpha=0.1`).
+643: *   **No Axes**: Remove X/Y ticks (they are arbitrary dimensions).
+644: *   **Annotation**: Do NOT label every point. Label **Centroids** only.
+645: *   **Caption Rule**: "Colors represent K-Means clusters (k=5). Representative terms for Cluster 1: [term1, term2, term3]."
+646: 
+647: #### C. Network Aesthetics (Anti-Hairball)
+648: *   **Filtering**: Never plot the raw graph. Apply **Backbone Extraction** (Disparity Filter) or threshold top 10% edges.
+649: *   **Layout**: Use `ForceAtlas2` or `Kamada-Kawai` (Deterministic).
+650: *   **Node Sizing**: Scale by PageRank or Betweenness Centrality (log-scale).
+651: 
+652: #### D. Geospatial Choropleths
+653: *   **Palette**: Use continuous sequential maps (`Viridis`, `Blues`).
+654: *   **Projection**: Do NOT use Mercator. Use `Albers Equal Area` for analytical accuracy.
+655: *   **Missing Data**: Explicitly color `NaN` regions as "Hatch Pattern" or strict Grey.
 
 **Issue: Overlapping labels**
 ```python

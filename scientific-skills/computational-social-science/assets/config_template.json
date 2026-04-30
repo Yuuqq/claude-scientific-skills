@@ -1,0 +1,31 @@
+{
+  "project_meta": {
+    "name": "project_name",
+    "description": "Short description of the research",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "raw_data": "data/raw",
+    "processed_data": "data/processed",
+    "output_figures": "output/figures",
+    "output_tables": "output/tables",
+    "logs": "output/logs"
+  },
+  "parameters": {
+    "random_seed": 42,
+    "time_window_start": "2020-01-01",
+    "time_window_end": "2024-12-31",
+    "min_occurrences": 5,
+    "stopwords_file": "assets/stopwords.txt"
+  },
+  "models": {
+    "main_regression": {
+        "formula": "y ~ x + z1 + z2",
+        "missing_treatment": "drop"
+    },
+    "sna": {
+        "community_algorithm": "louvain",
+        "resolution": 1.0
+    }
+  }
+}
