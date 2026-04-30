@@ -2,116 +2,107 @@
 
 Instructions for humans configuring Google Jules to work on this repository.
 
-## What Jules Will Do
+---
 
-Jules will create, edit, and improve skill documentation files (`SKILL.md`, references, scripts). It does NOT need Python, build tools, or test frameworks -- this is a pure content repository.
+## Setup Script
 
-## Repository Access
+**Copy this into the Jules "Setup script" field in the repository settings:**
 
-1. Fork or own the repository: `Yuuqq/claude-scientific-skills`
-2. Ensure Jules has write access to the repository via GitHub integration
-
-## Environment Requirements
-
-### Runtime
-- **Language:** None required (Markdown content only)
-- **Python:** 3.12+ (only for `scripts/generate_skills_data.py` to regenerate catalog)
-- **Build system:** None
-
-### Tools Jules Should Have Access To
-- File read/write (for SKILL.md, references, scripts)
-- Shell (for running `python scripts/generate_skills_data.py`)
-- Git (for commits)
-
-### No Special Dependencies
-This repo has no `requirements.txt`, `package.json`, or build config. Jules should NOT attempt to install any packages or run any build commands.
-
-## Jules Configuration
-
-### Repository Settings
-
-```
-Repository: Yuuqq/claude-scientific-skills
-Branch: main
-Working directory: /
+```bash
+bash .jules/setup.sh
 ```
 
-### Instructions File
+This script:
+1. Verifies the repo structure is correct
+2. Checks Python availability (needed for catalog regeneration)
+3. Counts and validates all skill directories
+4. Regenerates `docs/skills.json` from SKILL.md files
+5. Prints a summary of the environment
 
-The main instructions are in `JULES.md` at the repository root. Jules should read this file at the start of every session.
+The script runs once on first setup, then the environment is snapshotted for faster subsequent startups.
 
-### Key Files Jules Will Edit
+---
 
-| File Pattern | Purpose |
-|-------------|---------|
-| `scientific-skills/*/SKILL.md` | Main skill documentation |
-| `scientific-skills/*/references/*.md` | Reference documents |
-| `scientific-skills/*/scripts/*.py` | Example Python scripts |
-| `.claude-plugin/marketplace.json` | Skill registry (add new skills) |
-| `docs/skills.json` | Catalog data (regenerated) |
+## What This Repo Needs
 
-### Files Jules Should NOT Edit
+| Component | Required? | Why |
+|-----------|-----------|-----|
+| Python 3.12+ | Optional | Only for `scripts/generate_skills_data.py` |
+| Node.js | No | Not a JS project |
+| pip/uv | No | No packages to install |
+| Build tools | No | No build step |
 
-| File | Reason |
-|------|--------|
-| `docs/index.html` | GitHub Pages site (edit separately if needed) |
-| `.planning/*` | GSD project planning artifacts |
-| `README.md` | Top-level docs (edit separately if needed) |
-| `LICENSE.md` | Legal -- do not modify |
+**This is a pure content/documentation repository.** Jules will only edit Markdown files and occasionally run the Python catalog generator.
 
-## Typical Jules Tasks
+---
 
-### Task: Improve a skill
+## How Jules Should Work
+
+### Jules reads these files automatically:
+- `JULES.md` -- main instructions (read this first every session)
+- `agents.md` -- additional agent configuration hints
+
+### Jules edits these files:
+| Pattern | Purpose |
+|---------|---------|
+| `scientific-skills/*/SKILL.md` | Skill documentation |
+| `scientific-skills/*/references/*.md` | Reference docs |
+| `scientific-skills/*/scripts/*.py` | Example scripts |
+| `.claude-plugin/marketplace.json` | Skill registry |
+| `docs/skills.json` | Catalog data (regenerated via script) |
+
+### Jules must NOT edit:
+| Pattern | Reason |
+|---------|--------|
+| `.planning/*` | Managed by GSD workflows |
+| `.jules/*` | Managed by humans |
+| `JULES.md` | Instruction file -- human-controlled |
+| `LICENSE.md` | Legal |
+
+---
+
+## Typical Task Templates
+
+### Improve a skill
 ```
-Read scientific-skills/<name>/SKILL.md and improve it to production quality.
-Follow the skill template in JULES.md. Add missing sections, expand examples,
-create reference documents. Target 500+ lines.
+Improve scientific-skills/<name>/SKILL.md to production quality.
+Read JULES.md first. Current state: N lines. Target: 500+ lines.
+Add missing sections per the template. Run python scripts/generate_skills_data.py after.
 ```
 
-### Task: Add a new skill
+### Add a new skill
 ```
-Create a new skill for <library-name>. Follow the skill template in JULES.md.
-Create SKILL.md, references/, scripts/. Register in marketplace.json.
-Run python scripts/generate_skills_data.py to update the catalog.
-```
-
-### Task: Fix factual errors
-```
-The API reference in scientific-skills/<name>/references/api_reference.md
-contains outdated information. Verify against official docs and update.
+Create skill for <library-name>. Read JULES.md for template.
+Create scientific-skills/<name>/SKILL.md + references/ + scripts/.
+Register in .claude-plugin/marketplace.json.
+Run python scripts/generate_skills_data.py.
 ```
 
-### Task: Regenerate catalog
+### Batch improvement (use DEVELOPMENT-PLAN.md)
 ```
-Run python scripts/generate_skills_data.py to regenerate docs/skills.json.
-Commit the updated file.
+Read DEVELOPMENT-PLAN.md Phase 2. Improve all Tier D skills
+to Tier C minimum. One skill per commit. Run catalog script after each.
 ```
+
+---
 
 ## Post-Jules Verification
 
-After Jules completes a task:
+After Jules creates a PR:
 
-1. **Check the diff:** `git diff` -- verify changes look correct
-2. **Regenerate catalog:** `python scripts/generate_skills_data.py`
-3. **Preview locally:** Open `docs/index.html` in a browser
-4. **Commit and push:** `git add -A && git commit && git push`
+1. `git diff` -- check changes
+2. `python scripts/generate_skills_data.py` -- regenerate catalog
+3. Open `docs/index.html` locally -- verify catalog
+4. Merge PR
 
-## Environment Variables
-
-None required. No API keys, tokens, or secrets are needed for skill development.
-
-If a skill references external APIs that need keys (e.g., Perplexity search needs OpenRouter), document this in the skill's SKILL.md but do NOT store actual keys in the repository.
+---
 
 ## Troubleshooting
 
-**Jules tries to install Python packages:**
-Tell it this is a content repository. No packages to install. Read JULES.md.
-
-**Jules tries to run tests:**
-There are no tests. This is documentation. Read JULES.md.
-
-**Jules modifies planning files:**
-Stop it. Planning files are managed by GSD workflows, not Jules.
-
-**skills.json is out of date:**
-Run: `python scripts/generate_skills_data.py`
+| Problem | Fix |
+|---------|-----|
+| Jules tries to install packages | Remind it: "This is a content repo. Read JULES.md." |
+| Jules tries to run tests | "No tests exist. Read JULES.md." |
+| Jules edits planning files | "Do not touch .planning/. Read JULES.md." |
+| skills.json stale | Run: `python scripts/generate_skills_data.py` |
+| Setup script fails | Check Python is available; content editing still works without it |
