@@ -78,7 +78,7 @@
         "./scientific-skills/statistical-analysis",
         "./scientific-skills/statsmodels",
         "./scientific-skills/sympy",
-        "./scientific-skills/torch_geometric",
+        "./scientific-skills/torch-geometric",
         "./scientific-skills/transformers",
         "./scientific-skills/umap-learn",
         "./scientific-skills/uspto-database",
