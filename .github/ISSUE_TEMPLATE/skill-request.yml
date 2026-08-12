@@ -1,0 +1,27 @@
+name: Skill request
+description: Propose a new skill for a scientific tool, database, or workflow
+title: "[request] "
+labels: ["skill-request"]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool / domain
+      description: Library, database, or research workflow the skill should cover
+      placeholder: scanpy (single-cell RNA-seq)
+    validations:
+      required: true
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Research use case
+      description: What real research task would this skill help complete?
+    validations:
+      required: true
+  - type: textarea
+    id: overlap
+    attributes:
+      label: Overlap check
+      description: Which existing skills are closest, and why are they not enough?
+    validations:
+      required: false

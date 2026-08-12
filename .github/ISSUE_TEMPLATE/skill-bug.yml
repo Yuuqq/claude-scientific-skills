@@ -1,0 +1,27 @@
+name: Skill bug report
+description: A skill contains a wrong API, broken example, dead link, or factual error
+title: "[bug] <skill-name>: "
+labels: ["bug"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: Which skill is affected (directory name)
+      placeholder: scikit-learn
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: Quote the incorrect content and say what the correct version is. Link official docs if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: How it failed for you
+      description: What did the agent do wrong because of this content?
+    validations:
+      required: false
