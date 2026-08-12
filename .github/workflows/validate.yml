@@ -1,0 +1,35 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  skills:
+    name: Skill structure and registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate all skills
+        run: python scripts/validate_skills.py
+      - name: Catalog is up to date
+        run: |
+          python scripts/generate_skills_data.py
+          git diff --exit-code docs/skills.json
+
+  scripts:
+    name: Python script lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - name: Ruff (error-level rules)
+        run: ruff check scientific-skills scripts --select E9,F63,F7,F82
