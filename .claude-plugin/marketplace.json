@@ -1,12 +1,11 @@
 {
-  "name": "claude-scientific-skills",
+  "name": "research-grade-skills",
   "owner": {
-    "name": "K-Dense Inc.",
-    "email": "contact@k-dense.ai"
+    "name": "Yuuqq"
   },
   "metadata": {
-    "description": "Claude scientific skills from K-Dense Inc",
-    "version": "2.18.0"
+    "description": "Research-grade scientific skills, CI-validated on every commit",
+    "version": "3.0.0"
   },
   "plugins": [
     {

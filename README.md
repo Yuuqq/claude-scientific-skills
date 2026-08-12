@@ -1,140 +1,115 @@
-# Claude Scientific Skills
+# Research-Grade Skills
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
-[![Skills](https://img.shields.io/badge/Skills-70-brightgreen.svg)](#available-skills)
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue)](https://yuuqq.github.io/claude-scientific-skills/)
+[![validate](https://github.com/Yuuqq/research-grade-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/Yuuqq/research-grade-skills/actions/workflows/validate.yml)
+[![Skills](https://img.shields.io/badge/skills-69-brightgreen.svg)](https://yuuqq.github.io/research-grade-skills/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE.md)
 
-A collection of **70 ready-to-use scientific skills** for Claude Code. Transform Claude into your AI research assistant for biology, chemistry, medicine, physics, data analysis, and beyond.
+**CI-validated Agent Skills for science.** 69 skills covering scientific writing, machine learning, data analysis, quantum computing, and research databases — every one structurally verified on every commit.
 
-**[Browse all skills on the interactive catalog](https://yuuqq.github.io/claude-scientific-skills/)**
+Works with **Claude Code**, **Cursor**, **Codex**, and any client that supports the open [Agent Skills](https://agentskills.io/) standard.
 
----
-
-## Origin
-
-This repository is a **curated subset** of the original [claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) project by [K-Dense Inc.](https://k-dense.ai/). The original repository contained 140+ skills; this fork retains 70 skills that are actively maintained and validated. All skills are MIT-licensed (individual skills may have their own licenses as specified in their `SKILL.md`).
+**[Browse the interactive catalog](https://yuuqq.github.io/research-grade-skills/)**
 
 ---
 
-## Available Skills
+## Why This Exists
 
-### Scientific Communication (16 skills)
-Literature review, peer review, scientific writing, hypothesis generation, citation management, research grants, scholar evaluation, scientific schematics, slides, posters, and more.
+Researchers cannot afford silent errors. One wrong statistical method, one invented API, one outdated citation — and hours of work (or a paper) are compromised. Skill libraries optimized for size cannot make that guarantee; a library a researcher actually relies on has to earn it.
 
-### Machine Learning (10 skills)
-scikit-learn, PyTorch Lightning, Transformers, SHAP, Stable Baselines3, PufferLib, Torch Geometric, UMAP-learn, aeon, scikit-survival.
+This repository is an independently maintained, heavily curated descendant of [K-Dense's scientific skills](https://github.com/K-Dense-AI/scientific-agent-skills). Compared to where it started:
 
-### Data Analysis (8 skills)
-Polars, Dask, Vaex, NetworkX, GeoPandas, statsmodels, SymPy, Data Commons.
+- **All vendor promotion removed.** Upstream, every skill ended with a section steering the agent to advertise a commercial platform, plus one skill whose only job was self-promotion ("ALWAYS run this skill with every session"). All of it is gone, and CI now rejects any skill that tries to reintroduce vendor steering.
+- **A real quality gate.** Every push and pull request validates all 69 skills: frontmatter schema, skill-name/directory consistency, registry-to-disk consistency, relative link resolution, and Python script syntax. A weekly job audits all external links for rot. None of this existed before.
+- **Bugs actually fixed.** The validation gate already caught and fixed broken reference links, mismatched skill names, and an undefined-variable bug in a bundled script — the kind of defects that silently degrade agent behavior.
 
-### Visualization (6 skills)
-Matplotlib, Seaborn, Plotly, scientific visualization, AI image generation, scientific schematics.
+The goal is simple: **any skill you load from here should be safe to use in real research output.**
 
-### Research Tools (6 skills)
-Computational social science, general data science, resource detection, market research, MATLAB, Perplexity search.
+## Install
 
-### Document Processing (5 skills)
-DOCX, PDF, PPTX, XLSX generation, MarkItDown conversion.
+### Claude Code (plugin)
 
-### Quantum Computing (4 skills)
-Qiskit (IBM), Cirq (Google), PennyLane (gradient-based), QuTiP (open quantum systems).
+```
+/plugin marketplace add Yuuqq/research-grade-skills
+/plugin install scientific-skills@research-grade-skills
+```
 
-### Materials & Chemistry (4 skills)
-Pymatgen, PyMC (Bayesian modeling), PyMOO (optimization), FluidSim.
+### Cursor, Codex, and other Agent Skills clients
 
-### Physics & Math (3 skills)
-Astropy, statsmodels, SymPy.
-
-### Simulation & Engineering (3 skills)
-SimPy, Modal (cloud compute), Denario.
-
-### Databases (4 skills)
-OpenAlex, PubMed, bioRxiv, USPTO.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- **Claude Code** -- [Install guide](https://docs.claude.com/en/docs/claude-code/quickstart)
-- **Python 3.9+** (3.12+ recommended)
-- **uv** -- Python package manager ([install](https://docs.astral.sh/uv/))
-
-### Install as Plugin
+Clone the repository and copy the skills you need into your client's skills directory:
 
 ```bash
-# In Claude Code:
-/plugin marketplace add Yuuqq/claude-scientific-skills
-/plugin install scientific-skills@claude-scientific-skills
+git clone https://github.com/Yuuqq/research-grade-skills.git
+# Claude Code:  ~/.claude/skills/
+# Cursor:       ~/.cursor/skills/  (or .cursor/skills/ in a project)
+cp -r research-grade-skills/scientific-skills/literature-review ~/.cursor/skills/
 ```
 
-### Or Use via MCP Server
+Each skill is a self-contained folder — `SKILL.md` plus optional `references/`, `scripts/`, and `assets/`.
 
-For Cursor, ChatGPT, or any MCP-compatible client:
+## What's Inside
 
-```
-https://mcp.k-dense.ai/claude-scientific-skills/mcp
-```
+| Category | Skills |
+|---|---|
+| Scientific Communication (16) | literature review, peer review, scientific writing, hypothesis generation, citation management, research grants, scholar evaluation, schematics, slides, posters, venue templates |
+| Machine Learning (10) | scikit-learn, PyTorch Lightning, Transformers, SHAP, Stable Baselines3, PufferLib, Torch Geometric, UMAP-learn, aeon, scikit-survival |
+| Data Analysis (8) | Polars, Dask, Vaex, NetworkX, GeoPandas, Data Commons, exploratory data analysis, statistical analysis |
+| Visualization (6) | Matplotlib, Seaborn, Plotly, scientific visualization, image generation, schematics |
+| Research Tools (6) | computational social science, general data science, resource detection, market research, MATLAB, Perplexity search |
+| Document Processing (5) | DOCX, PDF, PPTX, XLSX, MarkItDown |
+| Databases (4) | OpenAlex, PubMed, bioRxiv, USPTO |
+| Quantum Computing (4) | Qiskit, Cirq, PennyLane, QuTiP |
+| Materials & Chemistry (4) | Pymatgen, PyMC, PyMOO, FluidSim |
+| Physics & Math (3) | Astropy, SymPy, statsmodels |
+| Simulation & Engineering (3) | SimPy, Modal, Denario |
 
----
+Full list with descriptions: **[interactive catalog](https://yuuqq.github.io/research-grade-skills/)**
 
 ## Quick Examples
 
-### Literature Review
+Literature review with a PRISMA diagram:
+
 ```
 Conduct a systematic literature review on CRISPR delivery mechanisms using PubMed and bioRxiv.
 Include a PRISMA flow diagram using scientific-schematics.
 ```
 
-### Data Analysis
+Publication-quality analysis:
+
 ```
 Load my CSV dataset, run exploratory data analysis with statistical tests,
 and create publication-quality visualizations with matplotlib and seaborn.
 ```
 
-### Machine Learning
+Explainable ML:
+
 ```
 Train a classification model on my dataset using scikit-learn,
 explain predictions with SHAP, and generate a comprehensive report.
 ```
 
----
+## The Quality Gate
 
-## Project Structure
+What CI enforces today, on every commit ([validate.yml](.github/workflows/validate.yml)):
 
-```
-scientific-skills/
-  <skill-name>/
-    SKILL.md          # Main skill documentation (required)
-    references/       # Detailed reference docs (optional)
-    scripts/          # Example Python scripts (optional)
-    assets/           # Images and diagrams (optional)
-```
+- SKILL.md present, frontmatter parses, `name`/`description`/`license` required
+- Frontmatter name matches directory name (what the agent loads is what's registered)
+- Every relative link resolves to a real file
+- Every bundled Python script passes syntax checks and error-level lint
+- Registry (`marketplace.json`) and disk agree 1:1 — no phantom skills
+- Zero vendor-promotion content
+- Weekly external-link rot audit ([links.yml](.github/workflows/links.yml))
 
-Each `SKILL.md` contains:
-- Description of what the skill does and when to use it
-- Core concepts and API reference
-- Code examples and best practices
-- Integration guides with other skills
-
----
+In progress — a deeper editorial audit of all 69 skills across four dimensions: academic rigor, real-world scenario coverage, discoverability of descriptions, and runnability of examples. Findings and fixes land as regular releases.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Follow the [Agent Skills Specification](https://agentskills.io/specification) for new skills
-4. Ensure `SKILL.md` has valid frontmatter (`name`, `description`, `license`)
-5. Test all code examples
-6. Submit a pull request
+Factual fixes are the most valuable contribution: wrong API names, outdated signatures, dead links, missing pitfalls. See [CONTRIBUTING.md](CONTRIBUTING.md) — the validator tells you before CI does:
 
----
+```bash
+pip install pyyaml
+python scripts/validate_skills.py
+```
 
-## License
+## License & Attribution
 
-MIT License. Copyright (c) 2025 K-Dense Inc.
-
-Individual skills may have their own licenses -- check the `license` field in each skill's `SKILL.md`.
-
-**Original project:** [K-Dense-AI/claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) by [K-Dense Inc.](https://k-dense.ai/)
+MIT. Original skill content copyright (c) 2025 [K-Dense Inc.](https://github.com/K-Dense-AI/scientific-agent-skills), used and modified under the MIT license; individual skills may carry their own licenses in their `SKILL.md` frontmatter. This project is not affiliated with or endorsed by K-Dense Inc.
