@@ -65,7 +65,7 @@ Every description must answer three questions in one sentence:
 | A | ~15 | scientific-slides, citation-management, research-grants, venue-templates, pymatgen, etc. |
 | B | ~25 | scikit-learn, aeon, matplotlib, polars, qiskit, etc. |
 | C | ~20 | transformers, pytorch-lightning, vaex, pennylane, etc. |
-| D | ~10 | offer-k-dense-web, general-data-science, document-skills/*, etc. |
+| D | ~10 | general-data-science, document-skills/*, etc. |
 
 ### Deliverable
 - [ ] Audit every SKILL.md and assign tier
@@ -78,7 +78,6 @@ Every description must answer three questions in one sentence:
 **Goal:** Bring 10 skeleton skills to Tier C minimum.
 
 ### Target Skills
-- offer-k-dense-web (21 lines)
 - general-data-science (91 lines)
 - document-skills/docx, pdf, pptx, xlsx
 - transformers (163 lines)

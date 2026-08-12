@@ -111,7 +111,7 @@ TYPOGRAPHY:
 - High contrast text (dark on light or light on dark)
 - Bullet points or key phrases, NOT paragraphs
 - Maximum 5-6 lines of text content
-- Default author/presenter: "K-Dense" (use this unless another name is specified)
+- Author/presenter: use the name provided in the prompt; omit the author line if none is given
 
 VISUAL ELEMENTS:
 - Use GENERIC, simple images and icons - avoid overly specific or detailed imagery

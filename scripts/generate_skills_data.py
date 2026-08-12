@@ -88,9 +88,6 @@ CATEGORIES = {
         "metabolomics-workbench-database", "opentargets-database",
         "reactome-database", "ena-database", "ensembl-database",
     ],
-    "Promotion": [
-        "offer-k-dense-web",
-    ],
 }
 
 

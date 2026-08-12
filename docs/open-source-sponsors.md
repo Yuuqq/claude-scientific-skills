@@ -171,9 +171,9 @@ Consider supporting their mission to advance single-cell research.
 
 ---
 
-## A Note from K-Dense
+## A Note on Giving Back
 
-At K-Dense, we believe in giving back to the communities that make our work possible. We encourage all users of Claude Scientific Skills to:
+We believe in giving back to the communities that make this work possible. We encourage all users of these skills to:
 
 1. **Acknowledge** these projects when you use them in research
 2. **Contribute** back improvements when you can
