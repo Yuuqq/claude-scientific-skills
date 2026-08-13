@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research-Grade Skills - CI-validated Agent Skills for science</title>
+<meta name="description" content="69 CI-validated Agent Skills for scientific research. Filter by discipline, check maturity scores, and install with one copy-paste. Works with Claude Code, Cursor, and Codex.">
 <style>
   :root {
     --bg: #0d1117;
@@ -16,6 +17,7 @@
     --tag-bg: #21262d;
     --green: #3fb950;
     --purple: #bc8cff;
+    --gold: #e3b341;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -41,6 +43,12 @@
     margin: 0 auto;
     font-size: 1.05rem;
   }
+  .header .legend {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    max-width: 560px;
+  }
+  .header .legend .star { color: var(--gold); }
   .stats {
     display: flex;
     gap: 2rem;
@@ -77,7 +85,7 @@
     margin-bottom: 1rem;
   }
   .search-wrap::before {
-    content: "\u{1F50D}";
+    content: "\1F50D";
     position: absolute;
     left: 0.8rem;
     top: 50%;
@@ -85,7 +93,22 @@
     font-size: 0.9rem;
     opacity: 0.5;
   }
-  .categories {
+  .filter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .filter-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 5.2rem;
+    text-align: right;
+  }
+  .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -122,13 +145,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 1rem;
+    align-items: start;
   }
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 1.2rem;
-    cursor: pointer;
     transition: border-color 0.2s, transform 0.1s;
     display: flex;
     flex-direction: column;
@@ -141,7 +164,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.35rem;
   }
   .card-name {
     font-size: 1rem;
@@ -159,6 +182,16 @@
     flex-shrink: 0;
     margin-left: 0.5rem;
   }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .stars { color: var(--gold); letter-spacing: 0.1em; cursor: help; }
+  .stars .off { color: var(--border); }
   .card-desc {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -167,6 +200,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    cursor: pointer;
   }
   .card-desc.expanded {
     -webkit-line-clamp: unset;
@@ -185,8 +219,79 @@
     background: var(--tag-bg);
     color: var(--text-muted);
   }
+  .tag.disc { color: var(--purple); border: 1px solid #3a2e55; }
   .tag.scripts { color: var(--green); }
-  .tag.refs { color: var(--purple); }
+  .card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.42rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary {
+    background: var(--accent-dim);
+    border-color: var(--accent-dim);
+    color: #fff;
+  }
+  .btn.primary:hover { background: var(--accent); color: #fff; }
+  .install-panel {
+    display: none;
+    margin-top: 0.8rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+  }
+  .install-panel.open { display: block; }
+  .install-row { margin-bottom: 0.7rem; }
+  .install-row:last-child { margin-bottom: 0; }
+  .install-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .copy-btn {
+    font-size: 0.68rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: var(--green); color: var(--green); }
+  .install-row pre {
+    background: #0a0d12;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.6rem;
+    overflow-x: auto;
+  }
+  .install-row code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--text);
+    white-space: pre;
+  }
   .empty {
     grid-column: 1 / -1;
     text-align: center;
@@ -194,14 +299,6 @@
     color: var(--text-muted);
   }
   .empty h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-  .expand-hint {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: 0.4rem;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .card:hover .expand-hint { opacity: 1; }
   .footer {
     text-align: center;
     padding: 2rem 1rem;
@@ -211,9 +308,11 @@
   }
   .footer a { color: var(--accent); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     .grid { grid-template-columns: 1fr; }
     .header h1 { font-size: 1.5rem; }
+    .filter-row { flex-direction: column; gap: 0.3rem; }
+    .filter-label { text-align: left; width: auto; }
   }
 </style>
 </head>
@@ -222,9 +321,11 @@
 <div class="header">
   <h1>Research-Grade <span>Skills</span></h1>
   <p>CI-validated Agent Skills for science. Every skill is structurally verified on every commit: no dead links, no phantom registrations, no vendor promotion. Works with Claude Code, Cursor, Codex, and any Agent Skills client.</p>
+  <p class="legend"><span class="star">&#9733;</span> Maturity is computed automatically from documentation depth, reference docs, and runnable scripts &mdash; not hand-picked ratings. Hover a score to see the inputs.</p>
   <div class="stats">
     <div><strong id="total-count">69</strong> Skills</div>
     <div><strong id="cat-count">13</strong> Categories</div>
+    <div><strong id="disc-count">10</strong> Disciplines</div>
   </div>
 </div>
 
@@ -232,7 +333,14 @@
   <div class="search-wrap">
     <input class="search-box" id="search" type="text" placeholder="Search skills by name or description...">
   </div>
-  <div class="categories" id="categories"></div>
+  <div class="filter-row">
+    <div class="filter-label">Discipline</div>
+    <div class="chips" id="disciplines"></div>
+  </div>
+  <div class="filter-row">
+    <div class="filter-label">Category</div>
+    <div class="chips" id="categories"></div>
+  </div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -244,37 +352,94 @@
 </div>
 
 <script>
+const REPO = 'Yuuqq/research-grade-skills';
+const REPO_URL = 'https://github.com/' + REPO;
+
 let skills = [];
 let activeCategory = null;
+let activeDiscipline = null;
 
 async function init() {
   const resp = await fetch('skills.json');
   skills = await resp.json();
+  skills.sort((a, b) => b.maturity - a.maturity || a.name.localeCompare(b.name));
   document.getElementById('total-count').textContent = skills.length;
 
   const cats = {};
   skills.forEach(s => { cats[s.category] = (cats[s.category] || 0) + 1; });
-  const sorted = Object.entries(cats).sort((a, b) => b[1] - a[1]);
-  document.getElementById('cat-count').textContent = sorted.length;
+  const sortedCats = Object.entries(cats).sort((a, b) => b[1] - a[1]);
+  document.getElementById('cat-count').textContent = sortedCats.length;
 
-  const catEl = document.getElementById('categories');
-  const allBtn = document.createElement('button');
-  allBtn.className = 'cat-btn active';
-  allBtn.textContent = `All (${skills.length})`;
-  allBtn.onclick = () => { activeCategory = null; render(); };
-  catEl.appendChild(allBtn);
+  const discs = {};
+  skills.forEach(s => (s.disciplines || []).forEach(d => { discs[d] = (discs[d] || 0) + 1; }));
+  const sortedDiscs = Object.entries(discs).sort((a, b) => b[1] - a[1]);
+  document.getElementById('disc-count').textContent = sortedDiscs.length;
 
-  sorted.forEach(([cat, count]) => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn';
-    btn.innerHTML = `${cat}<span class="cat-count">${count}</span>`;
-    btn.dataset.cat = cat;
-    btn.onclick = () => { activeCategory = cat; render(); };
-    catEl.appendChild(btn);
-  });
+  buildChips('categories', sortedCats, skills.length,
+    cat => { activeCategory = cat; render(); });
+  buildChips('disciplines', sortedDiscs, skills.length,
+    disc => { activeDiscipline = disc; render(); });
 
   document.getElementById('search').addEventListener('input', render);
   render();
+}
+
+function buildChips(elId, entries, total, onPick) {
+  const el = document.getElementById(elId);
+  const allBtn = document.createElement('button');
+  allBtn.className = 'cat-btn active';
+  allBtn.textContent = 'All';
+  allBtn.onclick = () => onPick(null);
+  el.appendChild(allBtn);
+  entries.forEach(([value, count]) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.innerHTML = esc(value) + '<span class="cat-count">' + count + '</span>';
+    btn.dataset.value = value;
+    btn.onclick = () => onPick(value);
+    el.appendChild(btn);
+  });
+}
+
+function syncChips(elId, activeValue) {
+  document.querySelectorAll('#' + elId + ' .cat-btn').forEach(btn => {
+    if (!btn.dataset.value) {
+      btn.classList.toggle('active', !activeValue);
+    } else {
+      btn.classList.toggle('active', btn.dataset.value === activeValue);
+    }
+  });
+}
+
+function starBar(s) {
+  const on = '&#9733;'.repeat(s.maturity);
+  const off = s.maturity < 5 ? '<span class="off">' + '&#9733;'.repeat(5 - s.maturity) + '</span>' : '';
+  const tip = 'Maturity ' + s.maturity + '/5 - auto-scored from: ' + s.lines + ' doc lines, '
+    + s.n_references + ' reference file(s), ' + s.n_scripts + ' script(s)';
+  return '<span class="stars" title="' + esc(tip) + '">' + on + off + '</span>';
+}
+
+function installPanel(s) {
+  const plugin = '/plugin marketplace add ' + REPO + '\n/plugin install scientific-skills@research-grade-skills';
+  const claude = 'git clone --depth 1 ' + REPO_URL + '.git &amp;&amp; cp -r research-grade-skills/' + esc(s.path) + ' ~/.claude/skills/';
+  const cursor = 'git clone --depth 1 ' + REPO_URL + '.git &amp;&amp; cp -r research-grade-skills/' + esc(s.path) + ' ~/.cursor/skills/';
+  return (
+    '<div class="install-panel">' +
+      installRow('Claude Code &mdash; all 69 skills (plugin)', plugin) +
+      installRow('Claude Code &mdash; this skill only', claude) +
+      installRow('Cursor &mdash; this skill only', cursor) +
+    '</div>'
+  );
+}
+
+function installRow(label, code) {
+  return (
+    '<div class="install-row">' +
+      '<div class="install-label"><span>' + label + '</span>' +
+      '<button class="copy-btn" onclick="copyFrom(event, this)">Copy</button></div>' +
+      '<pre><code>' + code + '</code></pre>' +
+    '</div>'
+  );
 }
 
 function render() {
@@ -284,43 +449,75 @@ function render() {
   if (activeCategory) {
     filtered = filtered.filter(s => s.category === activeCategory);
   }
+  if (activeDiscipline) {
+    filtered = filtered.filter(s => (s.disciplines || []).includes(activeDiscipline));
+  }
   if (q) {
     filtered = filtered.filter(s =>
       s.name.toLowerCase().includes(q) ||
-      s.description.toLowerCase().includes(q)
+      s.description.toLowerCase().includes(q) ||
+      (s.disciplines || []).some(d => d.toLowerCase().includes(q))
     );
   }
 
-  // Update category buttons
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    if (!btn.dataset.cat) {
-      btn.classList.toggle('active', !activeCategory);
-    } else {
-      btn.classList.toggle('active', btn.dataset.cat === activeCategory);
-    }
-  });
+  syncChips('categories', activeCategory);
+  syncChips('disciplines', activeDiscipline);
 
   const grid = document.getElementById('grid');
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty"><h3>No skills found</h3><p>Try a different search or category</p></div>';
+    grid.innerHTML = '<div class="empty"><h3>No skills found</h3><p>Try a different search, discipline, or category</p></div>';
     return;
   }
 
-  grid.innerHTML = filtered.map(s => `
-    <div class="card" onclick="this.querySelector('.card-desc').classList.toggle('expanded')">
-      <div class="card-head">
-        <div class="card-name">${esc(s.name)}</div>
-        <div class="card-cat">${esc(s.category)}</div>
-      </div>
-      <div class="card-desc">${esc(s.description)}</div>
-      <div class="expand-hint">Click to expand</div>
-      <div class="card-tags">
-        ${s.has_scripts ? '<span class="tag scripts">scripts</span>' : ''}
-        ${s.has_references ? '<span class="tag refs">references</span>' : ''}
-        ${s.license ? `<span class="tag">${esc(s.license)}</span>` : ''}
-      </div>
-    </div>
-  `).join('');
+  grid.innerHTML = filtered.map(s => (
+    '<div class="card">' +
+      '<div class="card-head">' +
+        '<div class="card-name">' + esc(s.name) + '</div>' +
+        '<div class="card-cat">' + esc(s.category) + '</div>' +
+      '</div>' +
+      '<div class="card-meta">' + starBar(s) +
+        '<span>' + s.n_references + ' refs &middot; ' + s.n_scripts + ' scripts</span>' +
+      '</div>' +
+      '<div class="card-desc" onclick="this.classList.toggle(\'expanded\')" title="Click to expand">' + esc(s.description) + '</div>' +
+      '<div class="card-tags">' +
+        (s.disciplines || []).map(d => '<span class="tag disc">' + esc(d) + '</span>').join('') +
+        (s.license ? '<span class="tag">' + esc(s.license) + '</span>' : '') +
+      '</div>' +
+      '<div class="card-actions">' +
+        '<button class="btn primary" onclick="togglePanel(event, this)">Use this skill</button>' +
+        '<a class="btn" target="_blank" rel="noopener" href="' + REPO_URL + '/tree/main/' + esc(s.path) + '">Source &#8599;</a>' +
+      '</div>' +
+      installPanel(s) +
+    '</div>'
+  )).join('');
+}
+
+function togglePanel(event, btn) {
+  event.stopPropagation();
+  const panel = btn.closest('.card').querySelector('.install-panel');
+  const isOpen = panel.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide commands' : 'Use this skill';
+}
+
+function copyFrom(event, btn) {
+  event.stopPropagation();
+  const code = btn.closest('.install-row').querySelector('code').textContent;
+  const done = () => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1600);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(done);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    done();
+  }
 }
 
 function esc(str) {

@@ -91,6 +91,123 @@ CATEGORIES = {
 }
 
 
+# Discipline tags (a skill can belong to several). Anything unmapped -> General.
+DISCIPLINES = {
+    # Scientific communication -> useful to every field
+    "citation-management": ["General"],
+    "hypogenic": ["General", "Data Science & AI"],
+    "hypothesis-generation": ["General"],
+    "latex-posters": ["General"],
+    "literature-review": ["General"],
+    "paper-2-web": ["General"],
+    "peer-review": ["General"],
+    "pptx-posters": ["General"],
+    "research-grants": ["General"],
+    "research-lookup": ["General"],
+    "scholar-evaluation": ["General"],
+    "scientific-brainstorming": ["General"],
+    "scientific-critical-thinking": ["General"],
+    "scientific-slides": ["General"],
+    "scientific-writing": ["General"],
+    "venue-templates": ["General"],
+    # Machine learning
+    "aeon": ["Data Science & AI", "Math & Statistics"],
+    "pufferlib": ["Data Science & AI"],
+    "pytorch-lightning": ["Data Science & AI"],
+    "scikit-learn": ["Data Science & AI"],
+    "scikit-survival": ["Biology & Medicine", "Math & Statistics", "Data Science & AI"],
+    "shap": ["Data Science & AI"],
+    "stable-baselines3": ["Data Science & AI"],
+    "torch-geometric": ["Data Science & AI"],
+    "transformers": ["Data Science & AI"],
+    "umap-learn": ["Data Science & AI"],
+    # Data analysis
+    "dask": ["Data Science & AI"],
+    "datacommons-client": ["Social Science & Economics"],
+    "exploratory-data-analysis": ["Data Science & AI", "Math & Statistics"],
+    "geopandas": ["Geospatial"],
+    "networkx": ["Math & Statistics", "Social Science & Economics"],
+    "polars": ["Data Science & AI"],
+    "statistical-analysis": ["Math & Statistics"],
+    "vaex": ["Data Science & AI"],
+    # Research tools
+    "computational-social-science": ["Social Science & Economics"],
+    "general-data-science": ["Data Science & AI"],
+    "get-available-resources": ["General"],
+    "market-research-reports": ["Social Science & Economics"],
+    "matlab": ["Engineering", "Math & Statistics"],
+    "perplexity-search": ["General"],
+    # Visualization
+    "generate-image": ["General"],
+    "matplotlib": ["General", "Data Science & AI"],
+    "plotly": ["General", "Data Science & AI"],
+    "scientific-schematics": ["General"],
+    "scientific-visualization": ["General"],
+    "seaborn": ["Data Science & AI", "Math & Statistics"],
+    # Document processing
+    "document-skills/docx": ["General"],
+    "document-skills/pdf": ["General"],
+    "document-skills/pptx": ["General"],
+    "document-skills/xlsx": ["General"],
+    "markitdown": ["General"],
+    # Databases
+    "openalex-database": ["General"],
+    "pubmed-database": ["Biology & Medicine"],
+    "biorxiv-database": ["Biology & Medicine"],
+    "uspto-database": ["Engineering", "Social Science & Economics"],
+    # Quantum computing
+    "cirq": ["Quantum", "Physics & Astronomy"],
+    "pennylane": ["Quantum", "Physics & Astronomy"],
+    "qiskit": ["Quantum", "Physics & Astronomy"],
+    "qutip": ["Quantum", "Physics & Astronomy"],
+    # Materials, chemistry, physics, math
+    "fluidsim": ["Physics & Astronomy", "Engineering"],
+    "pymatgen": ["Chemistry & Materials"],
+    "pymc": ["Math & Statistics", "Data Science & AI"],
+    "pymoo": ["Engineering", "Math & Statistics"],
+    "astropy": ["Physics & Astronomy"],
+    "statsmodels": ["Math & Statistics", "Social Science & Economics"],
+    "sympy": ["Math & Statistics", "Physics & Astronomy"],
+    # Simulation & engineering
+    "denario": ["General", "Data Science & AI"],
+    "modal": ["Engineering", "Data Science & AI"],
+    "simpy": ["Engineering"],
+}
+
+
+def get_disciplines(skill_id: str, dir_name: str) -> list:
+    return DISCIPLINES.get(skill_id) or DISCIPLINES.get(dir_name) or ["General"]
+
+
+def compute_maturity(lines: int, n_refs: int, n_scripts: int, has_assets: bool) -> int:
+    """Auto-scored 1-5 from measurable signals only (no editorial opinion):
+    documentation depth, reference docs, runnable scripts, bundled assets."""
+    pts = 0
+    if lines >= 500:
+        pts += 3
+    elif lines >= 300:
+        pts += 2
+    elif lines >= 120:
+        pts += 1
+    if n_refs >= 3:
+        pts += 2
+    elif n_refs >= 1:
+        pts += 1
+    if n_scripts >= 1:
+        pts += 1
+    if has_assets:
+        pts += 1
+    if pts <= 1:
+        return 1
+    if pts == 2:
+        return 2
+    if pts == 3:
+        return 3
+    if pts <= 5:
+        return 4
+    return 5
+
+
 def get_category(skill_id: str, dir_name: str) -> str:
     # Try matching both the full ID and the directory name
     for cat, names in CATEGORIES.items():
@@ -134,6 +251,12 @@ def collect_skills():
     return skills
 
 
+def _count_files(directory: Path) -> int:
+    if not directory.is_dir():
+        return 0
+    return sum(1 for f in directory.rglob("*") if f.is_file())
+
+
 def _extract_skill(path: Path, parent: str = None) -> dict:
     text = (path / "SKILL.md").read_text(encoding="utf-8")
     fm = parse_frontmatter(text)
@@ -149,9 +272,9 @@ def _extract_skill(path: Path, parent: str = None) -> dict:
     # Extract license
     license_info = fm.get("license", "")
 
-    # Check for scripts and references
-    has_scripts = (path / "scripts").is_dir()
-    has_references = (path / "references").is_dir() or (path / "reference").is_dir()
+    lines = text.count("\n") + 1
+    n_refs = _count_files(path / "references") + _count_files(path / "reference")
+    n_scripts = _count_files(path / "scripts")
     has_assets = (path / "assets").is_dir()
 
     return {
@@ -160,8 +283,14 @@ def _extract_skill(path: Path, parent: str = None) -> dict:
         "description": desc,
         "license": license_info,
         "category": get_category(full_name, path.name),
-        "has_scripts": has_scripts,
-        "has_references": has_references,
+        "disciplines": get_disciplines(full_name, path.name),
+        "path": path.as_posix(),
+        "lines": lines,
+        "n_references": n_refs,
+        "n_scripts": n_scripts,
+        "maturity": compute_maturity(lines, n_refs, n_scripts, has_assets),
+        "has_scripts": n_scripts > 0,
+        "has_references": n_refs > 0,
         "has_assets": has_assets,
     }
 
