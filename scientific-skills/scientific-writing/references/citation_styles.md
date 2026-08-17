@@ -472,7 +472,7 @@ https://doi.org/10.1001/jamapsychiatry.2023.0123
 |-------|--------|
 | **AMA** | Author AA, Author BB. Title of article. *Journal*. Year;Vol(Iss):pp. doi:xx |
 | **Vancouver** | Author AA, Author BB. Title of article. Journal. Year;Vol(Iss):pp. |
-| **APA** | Author, A. A., & Author, B. B. (Year). Title of article. *Journal*, Vol(Iss), pp. https://doi.org/xx |
+| **APA** | Author, A. A., & Author, B. B. (Year). Title of article. *Journal*, Vol(Iss), pp. `https://doi.org/xx` |
 | **Chicago A-D** | Author, A. A., and B. B. Author. Year. "Title." *Journal* Vol (Iss): pp. |
 | **IEEE** | A. A. Author and B. B. Author, "Title," *Journal*, vol. X, no. X, pp. XX-XX, Mon. Year. |
 

@@ -583,7 +583,7 @@ def comprehensive_patent_analysis(patent_number, api_key):
 ## Resources
 
 ### API Documentation
-- **PatentSearch API**: https://search.patentsview.org/docs/
+- **PatentSearch / PatentsView**: https://www.uspto.gov/ip-policy/economic-research/patentsview
 - **USPTO Developer Portal**: https://developer.uspto.gov/
 - **USPTO Open Data Portal**: https://data.uspto.gov/
 - **API Key Registration**: https://account.uspto.gov/api-manager/

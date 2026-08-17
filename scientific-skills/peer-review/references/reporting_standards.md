@@ -17,7 +17,7 @@ This document catalogs major reporting standards and guidelines across scientifi
 - Adverse events
 - Trial registration number and protocol access
 
-**Reference:** http://www.consort-statement.org/
+**Reference:** https://www.consort-spirit.org/
 
 ### STROBE (Strengthening the Reporting of Observational Studies in Epidemiology)
 **Purpose:** Observational studies (cohort, case-control, cross-sectional)
@@ -113,7 +113,7 @@ This document catalogs major reporting standards and guidelines across scientifi
 - Raw and processed data availability
 - Database accession numbers
 
-**Reference:** http://fged.org/projects/miame/
+**Reference:** https://www.fged.org/projects/miame
 
 ### MINSEQE (Minimum Information about a high-throughput Nucleotide Sequencing Experiment)
 **Purpose:** High-throughput sequencing (RNA-seq, ChIP-seq, etc.)
@@ -184,7 +184,7 @@ This document catalogs major reporting standards and guidelines across scientifi
 - ROI definitions
 - Data sharing (raw data, analysis scripts)
 
-**Reference:** https://www.humanbrainmapping.org/cobidas
+**Reference:** https://doi.org/10.1101/054262
 
 ## Flow Cytometry
 

@@ -15,10 +15,7 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
-            --no-progress
-            --accept 200..=206,403,429
-            --timeout 20
-            --max-concurrency 8
+            --config .lychee.toml
             "scientific-skills/**/*.md"
             "README.md"
             "CONTRIBUTING.md"
