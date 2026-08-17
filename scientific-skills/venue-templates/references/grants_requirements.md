@@ -760,7 +760,7 @@ Comprehensive requirements and formatting guidelines for major federal and priva
 - NSF PAPPG: https://www.nsf.gov/publications/pub_summ.jsp?ods_key=pappg
 - NIH Application Guide: https://grants.nih.gov/grants/how-to-apply-application-guide.html
 - GrantForward (database): https://www.grantforward.com/
-- Pivot (database): https://pivot.proquest.com/
+- Pivot-RP (database): https://clarivate.com/academia-government/scientific-and-academic-research/research-funding-analytics/pivot-rp-funding/
 
 ### Institutional Resources
 - Office of Sponsored Research (OSR)

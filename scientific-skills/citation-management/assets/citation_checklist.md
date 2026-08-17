@@ -145,7 +145,7 @@ For your most important citations, manually verify:
 - [ ] Single hyphen in page ranges (123-145 → 123--145)
 - [ ] Ampersands in author lists (Smith & Jones → Smith and Jones)
 - [ ] Unprotected acronyms in titles (DNA → {DNA})
-- [ ] DOI includes URL prefix (https://doi.org/10.xxx → 10.xxx)
+- [ ] DOI includes URL prefix (`https://doi.org/10.xxx` → `10.xxx`)
 
 **Metadata Mismatches**:
 - [ ] Author names differ from publication

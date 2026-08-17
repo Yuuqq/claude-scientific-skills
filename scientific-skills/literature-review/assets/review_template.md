@@ -269,7 +269,7 @@ Title/abstract screened: n=[Y] → Full-text assessed: n=[Z] → Included: n=[N]
 
 **Format examples:**
 
-APA: Author, A. A., & Author, B. B. (Year). Title. *Journal*, *volume*(issue), pages. https://doi.org/xx.xxxx
+APA: Author, A. A., & Author, B. B. (Year). Title. *Journal*, *volume*(issue), pages. `https://doi.org/xx.xxxx`
 
 Nature: Author, A. A. & Author, B. B. Title. *J. Name* **volume**, pages (year).
 
