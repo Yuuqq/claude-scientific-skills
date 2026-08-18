@@ -7,6 +7,7 @@ verbose = "info"
 no_progress = true
 max_redirects = 10
 max_retries = 3
+retry_wait_time = 2
 max_concurrency = 8
 timeout = 20
 accept = ["200..=206", "301..=303", "403", "429"]
@@ -16,4 +17,9 @@ exclude = [
   '^https://modal\.com/(apps|secrets)/?$',
   # Canonical Paul Tol palette page; often drops CI connections
   '^https://personal\.sron\.nl/~pault/',
+  # Third-party hosts that refuse or reset GitHub Actions connections
+  '^https://developer\.uspto\.gov/',
+  '^https://pennylane\.ai/',
+  '^https://colorable\.jxnblk\.com/',
+  '^https://(www\.)?recomb\.org/',
 ]
