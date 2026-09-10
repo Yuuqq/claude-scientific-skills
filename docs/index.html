@@ -656,8 +656,8 @@ function installRow(label, rawCmd) {
 }
 function installPanelHTML(s) {
   const clone = 'git clone --depth 1 ' + REPO_URL + '.git';
-  const claude = clone + ' && cp -r ' + REPO_SLUG + '/' + s.path + ' ~/.claude/skills/';
-  const cursor = clone + ' && cp -r ' + REPO_SLUG + '/' + s.path + ' ~/.cursor/skills/';
+  const claude = clone + ' && cp -r "' + REPO_SLUG + '/' + s.path + '" ~/.claude/skills/';
+  const cursor = clone + ' && cp -r "' + REPO_SLUG + '/' + s.path + '" ~/.cursor/skills/';
   return '<div class="install">' +
     installRow('Claude Code', claude) +
     installRow('Cursor', cursor) +
