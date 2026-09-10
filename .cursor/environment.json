@@ -1,0 +1,17 @@
+{
+  "name": "Research-Grade Skills",
+  "install": "pip install --user pyyaml ruff",
+  "terminals": [
+    {
+      "name": "catalog",
+      "command": "cd docs && python3 -m http.server 8000",
+      "description": "Serves the interactive skills catalog (docs/) at http://localhost:8000. Open it to browse and search the 69 skills."
+    }
+  ],
+  "ports": [
+    {
+      "name": "catalog",
+      "port": 8000
+    }
+  ]
+}
