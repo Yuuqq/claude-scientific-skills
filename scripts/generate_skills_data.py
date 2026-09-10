@@ -11,89 +11,24 @@ OUTPUT = Path("docs/skills.json")
 
 # Category mapping based on skill name/description
 CATEGORIES = {
-    "Bioinformatics": [
-        "biopython", "scanpy", "anndata", "scvi-tools", "pydeseq2", "pysam",
-        "gget", "etetoolkit", "scikit-bio", "deeptools", "geniml", "cellxgene-census",
-        "arboreto", "cobrapy", "biorxiv-database", "alphafold-database",
-        "esm", "torchdrug", "adaptyv", "biomni", "bioservices", "diffdock",
-        "rowan",
-    ],
-    "Cheminformatics": [
-        "rdkit", "deepchem", "datamol", "molfeat", "medchem", "pytdc",
-        "chembl-database", "pubchem-database", "zinc-database", "drugbank-database",
-        "uspto-database",
-    ],
-    "Proteomics": [
-        "pyopenms", "matchms", "flowio", "uniprot-database", "pdb-database",
-        "brenda-database", "string-database",
-    ],
-    "Clinical & Medical": [
-        "clinical-decision-support", "clinical-reports", "treatment-plans",
-        "pyhealth", "pydicom", "pathml", "histolab", "neurokit2",
-        "clinvar-database", "clinicaltrials-database", "clinpgx-database",
-        "cosmic-database", "fda-database", "gene-database",
-    ],
-    "Machine Learning": [
-        "scikit-learn", "pytorch-lightning", "transformers", "shap",
-        "stable-baselines3", "pufferlib", "torch_geometric", "torch-geometric",
-        "umap-learn", "aeon", "scikit-survival",
-    ],
-    "Quantum Computing": [
-        "qiskit", "cirq", "pennylane", "qutip",
-    ],
-    "Materials & Chemistry": [
-        "pymatgen", "pymc", "pymc-bayesian-modeling", "pymoo", "fluidsim",
-    ],
-    "Physics & Math": [
-        "astropy", "sympy", "statsmodels",
-    ],
-    "Data Analysis": [
-        "polars", "dask", "vaex", "networkx", "geopandas",
-        "exploratory-data-analysis", "statistical-analysis",
-        "datacommons-client",
-    ],
-    "Visualization": [
-        "matplotlib", "seaborn", "plotly", "scientific-visualization",
-        "generate-image", "scientific-schematics",
-    ],
-    "Simulation & Engineering": [
-        "simpy", "modal", "denario", "gtars",
-    ],
-    "Scientific Communication": [
-        "literature-review", "peer-review", "scientific-writing",
-        "scientific-brainstorming", "scientific-critical-thinking",
-        "hypothesis-generation", "hypogenic", "scholar-evaluation",
-        "citation-management", "research-grants", "research-lookup",
-        "scientific-slides", "latex-posters", "pptx-posters",
-        "paper-2-web", "venue-templates",
-    ],
-    "Document Processing": [
-        "markitdown", "document-skills", "docx", "pdf", "pptx", "xlsx",
-    ],
-    "Research Tools": [
-        "get-available-resources", "perplexity-search", "matlab",
-        "computational-social-science", "general-data-science",
-        "market-research-reports",
-    ],
-    "Lab & Integration": [
-        "benchling-integration", "dnanexus-integration",
-        "labarchive-integration", "latchbio-integration",
-        "omero-integration", "opentrons-integration",
-        "protocolsio-integration", "pylabrobot",
-        "lamindb", "iso-13485-certification",
-    ],
-    "Database & API": [
-        "openalex-database", "pubmed-database", "geo-database",
-        "gwas-database", "hmdb-database", "kegg-database",
-        "metabolomics-workbench-database", "opentargets-database",
-        "reactome-database", "ena-database", "ensembl-database",
-    ],
+    "Bioinformatics": ["biorxiv-database"],
+    "Cheminformatics": ["uspto-database"],
+    "Machine Learning": ["scikit-learn", "pytorch-lightning", "transformers", "shap", "stable-baselines3", "pufferlib", "torch-geometric", "umap-learn", "aeon", "scikit-survival"],
+    "Quantum Computing": ["qiskit", "cirq", "pennylane", "qutip"],
+    "Materials & Chemistry": ["pymatgen", "pymc", "pymoo", "fluidsim"],
+    "Physics & Math": ["astropy", "sympy", "statsmodels"],
+    "Data Analysis": ["polars", "dask", "vaex", "networkx", "geopandas", "exploratory-data-analysis", "statistical-analysis", "datacommons-client"],
+    "Visualization": ["matplotlib", "seaborn", "plotly", "scientific-visualization", "generate-image", "scientific-schematics"],
+    "Simulation & Engineering": ["simpy", "modal", "denario"],
+    "Scientific Communication": ["literature-review", "peer-review", "scientific-writing", "scientific-brainstorming", "scientific-critical-thinking", "hypothesis-generation", "hypogenic", "scholar-evaluation", "citation-management", "research-grants", "research-lookup", "scientific-slides", "latex-posters", "pptx-posters", "paper-2-web", "venue-templates"],
+    "Document Processing": ["markitdown", "docx", "pdf", "pptx", "xlsx"],
+    "Research Tools": ["get-available-resources", "perplexity-search", "matlab", "computational-social-science", "general-data-science", "market-research-reports"],
+    "Database & API": ["openalex-database", "pubmed-database"],
 }
 
 
 # Discipline tags (a skill can belong to several). Anything unmapped -> General.
 DISCIPLINES = {
-    # Scientific communication -> useful to every field
     "citation-management": ["General"],
     "hypogenic": ["General", "Data Science & AI"],
     "hypothesis-generation": ["General"],
@@ -110,7 +45,6 @@ DISCIPLINES = {
     "scientific-slides": ["General"],
     "scientific-writing": ["General"],
     "venue-templates": ["General"],
-    # Machine learning
     "aeon": ["Data Science & AI", "Math & Statistics"],
     "pufferlib": ["Data Science & AI"],
     "pytorch-lightning": ["Data Science & AI"],
@@ -121,7 +55,6 @@ DISCIPLINES = {
     "torch-geometric": ["Data Science & AI"],
     "transformers": ["Data Science & AI"],
     "umap-learn": ["Data Science & AI"],
-    # Data analysis
     "dask": ["Data Science & AI"],
     "datacommons-client": ["Social Science & Economics"],
     "exploratory-data-analysis": ["Data Science & AI", "Math & Statistics"],
@@ -130,37 +63,31 @@ DISCIPLINES = {
     "polars": ["Data Science & AI"],
     "statistical-analysis": ["Math & Statistics"],
     "vaex": ["Data Science & AI"],
-    # Research tools
     "computational-social-science": ["Social Science & Economics"],
     "general-data-science": ["Data Science & AI"],
     "get-available-resources": ["General"],
     "market-research-reports": ["Social Science & Economics"],
     "matlab": ["Engineering", "Math & Statistics"],
     "perplexity-search": ["General"],
-    # Visualization
     "generate-image": ["General"],
     "matplotlib": ["General", "Data Science & AI"],
     "plotly": ["General", "Data Science & AI"],
     "scientific-schematics": ["General"],
     "scientific-visualization": ["General"],
     "seaborn": ["Data Science & AI", "Math & Statistics"],
-    # Document processing
     "document-skills/docx": ["General"],
     "document-skills/pdf": ["General"],
     "document-skills/pptx": ["General"],
     "document-skills/xlsx": ["General"],
     "markitdown": ["General"],
-    # Databases
     "openalex-database": ["General"],
     "pubmed-database": ["Biology & Medicine"],
     "biorxiv-database": ["Biology & Medicine"],
     "uspto-database": ["Engineering", "Social Science & Economics"],
-    # Quantum computing
     "cirq": ["Quantum", "Physics & Astronomy"],
     "pennylane": ["Quantum", "Physics & Astronomy"],
     "qiskit": ["Quantum", "Physics & Astronomy"],
     "qutip": ["Quantum", "Physics & Astronomy"],
-    # Materials, chemistry, physics, math
     "fluidsim": ["Physics & Astronomy", "Engineering"],
     "pymatgen": ["Chemistry & Materials"],
     "pymc": ["Math & Statistics", "Data Science & AI"],
@@ -168,7 +95,6 @@ DISCIPLINES = {
     "astropy": ["Physics & Astronomy"],
     "statsmodels": ["Math & Statistics", "Social Science & Economics"],
     "sympy": ["Math & Statistics", "Physics & Astronomy"],
-    # Simulation & engineering
     "denario": ["General", "Data Science & AI"],
     "modal": ["Engineering", "Data Science & AI"],
     "simpy": ["Engineering"],

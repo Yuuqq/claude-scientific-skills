@@ -98,7 +98,7 @@ def check_links(skill_dir: Path, text: str, rel: str, report: Report) -> None:
             continue
         if link.startswith("#") or link.startswith("<"):
             continue
-        target = link.split("#", 1)[0]
+        target = link.split("#", 1)[0].split("?", 1)[0]
         if not target:
             continue
         if not (skill_dir / target).exists():
@@ -139,6 +139,8 @@ def check_skill(skill_dir: Path, report: Report) -> None:
         name = str(fm.get("name", ""))
         if name and name != skill_dir.name:
             report.error(f"{rel}: frontmatter name '{name}' != directory name '{skill_dir.name}'")
+        if not re.match(r"^[a-zA-Z0-9_-]+$", skill_dir.name):
+            report.error(f"{rel}: directory name '{skill_dir.name}' contains invalid characters")
         desc = str(fm.get("description", "") or "")
         if desc and len(desc) > MAX_DESCRIPTION_LEN:
             report.error(f"{rel}: description too long ({len(desc)} > {MAX_DESCRIPTION_LEN} chars)")
